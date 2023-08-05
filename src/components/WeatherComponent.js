@@ -24,9 +24,9 @@ function WeatherComponent() {
   const [unit, setUnit] = useState("imperial");
   const options = [
     { value: 'imperial', label: 'imperial' },
-    { value: 'metric', label: 'metric' }    
+    { value: 'metric', label: 'metric' }
   ];
-  
+
   useEffect(() => {
     const fetchData = async () => {
       const location = CANADA_CITIES[city];
@@ -34,7 +34,7 @@ function WeatherComponent() {
         console.error(`No location data for city: ${city}`);
         return;
       }
-      try {        
+      try {
         const data = await fetchWeather(location.lat, location.lon);
         setWeatherData(data);
       } catch (error) {
@@ -42,8 +42,8 @@ function WeatherComponent() {
     };
     fetchData();
   }, [city]);
-  
-  
+
+
   const handleCityChange = (e) => {
     setCity(e.target.value);
   };
@@ -53,22 +53,34 @@ function WeatherComponent() {
     renderWeather();
   };
 
-  const renderWeather = () => {        
-    console.log(11111);
-    if(!weatherData || unit === "")
-      return null;
-    const getTempByUnit = getWeatherByUnit(weatherData.main.temp, unit);
-    console.log(12222, getTempByUnit);
-    return <div>
-      <p>Temperature: {getTempByUnit} </p>
-      <p>Humidity: {weatherData.main.humidity}</p>
-      <p>Wind speed: {weatherData.wind.speed}</p>
-      Add more data points as required
+  const getWeatherInfo = (condition, index) => {
+    return <div key={index}>
+      <p>{condition.main}</p>
+      <img        
+        src={`https://openweathermap.org/img/wn/${condition.icon}.png`}
+        alt={condition.description}
+      />
     </div>
   }
 
-  const getWeatherByUnit = (temperature, unit) => {    
-    if(unit === "imperial"){
+  const renderWeather = () => {
+    if (!weatherData || unit === "")
+      return null;
+    const getTempByUnit = getWeatherByUnit(weatherData.main.temp, unit);
+    return <div>
+      <p>Temperature: {getTempByUnit} </p>
+      <p>High temp : {getWeatherByUnit(weatherData.main.temp_max, unit)}, Low Temp : {getWeatherByUnit(weatherData.main.temp_min, unit)}</p>
+      <p>Humidity: {weatherData.main.humidity}</p>
+      <p>Wind speed: {weatherData.wind.speed}</p>
+
+      {weatherData.weather.map((weatherCondition, index) => (
+        getWeatherInfo(weatherCondition, index)
+      ))}
+    </div>
+  }
+
+  const getWeatherByUnit = (temperature, unit) => {
+    if (unit === "imperial") {
       return temperature + "℃";
     } else {
       return ((temperature * 1.8) + 32).toFixed(2) + "°F";
@@ -78,7 +90,7 @@ function WeatherComponent() {
   return (
     <div>
       <h1>Weather Information</h1>
-      <Dropdown options={options} onChange={handleUnitChange}/>
+      <Dropdown options={options} onChange={handleUnitChange} />
       <select value={city} onChange={handleCityChange}>
         {Object.keys(CANADA_CITIES).map((city) => (
           <option key={city} value={city}>
@@ -86,7 +98,7 @@ function WeatherComponent() {
           </option>
         ))}
       </select>
-      {renderWeather()}      
+      {renderWeather()}
     </div>
   );
 }
