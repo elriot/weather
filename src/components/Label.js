@@ -19,6 +19,7 @@ function Label({ size = "medium", text, className, children }) {
       fontWeight = "font-medium";
   }
   const classes = classNames(textSize,fontWeight, "text-gray-800", className);
+  // console.log(classes);
   return (
     <span className={classes}>
       {children}

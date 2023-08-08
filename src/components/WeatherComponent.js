@@ -92,7 +92,6 @@ function WeatherComponent() {
             bg = "bg-gray-300"; gradient = "from-gray-500";
         } else if (id !== 800){ // 80x : cloud, 800 : clear
             bg = "bg-indigo-200"; gradient = "from-gray-200"
-
         }
         return classname(bg, dir, gradient);
     }
@@ -113,17 +112,17 @@ function WeatherComponent() {
             <div className="flex">
               <div className="w-1/2 text-white">
                 <h2 className="text-xl text-shadow-sm">Temperature</h2> 
-                <p className="text-2xl text-shadow-lg">{getTempByUnit}</p>
+                <p className="text-2xl text-shadow-lg-dark">{getTempByUnit}</p>
               </div>
               <div className="w-1/2 text-white">
                 <h2 className="text-xl text-shadow-sm">High / Low</h2>
-                <p className="text-2xl text-shadow-lg">{getWeatherByUnit(weatherData.main.temp_max, unit)} / {getWeatherByUnit(weatherData.main.temp_min, unit)}</p>                
+                <p className="text-2xl text-shadow-lg-dark">{getWeatherByUnit(weatherData.main.temp_max, unit)} / {getWeatherByUnit(weatherData.main.temp_min, unit)}</p>                
               </div>
             </div>
       
-            <div className="text-white mt-4">
-              <p className="text-xl">Humidity: {weatherData.main.humidity}</p>
-              <p className="text-xl">Wind speed: {weatherData.wind.speed}</p>
+            <div className="text-white text-shadow-sm mt-4">
+              <p className="text-xl flex"> Humidity : {weatherData.main.humidity}</p>
+              <p className="text-xl flex">Wind speed: {weatherData.wind.speed}</p>
             </div>
           </div>
         );
@@ -140,7 +139,7 @@ function WeatherComponent() {
     return (
         <div className="min-h-screen flex justify-center bg-gray-200 pt-20 pb-20">
             <div className="p-8 bg-white shadow-lg rounded-lg flex flex-col space-y-4 w-1/2 min-w-500">
-                <Label size="large">Weather Information</Label>
+                <Label size="large" className="text-shadow-lg-light">Weather Information</Label>
                 <div className="flex space-x-4">
                     <Dropdown options={cities} onChange={handleCityChange} className="w-1/2" msg="select city"/>
                     <Dropdown options={options} onChange={handleUnitChange} className="w-1/2" />
