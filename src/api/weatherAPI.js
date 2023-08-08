@@ -7,6 +7,7 @@ export const fetchWeather = async (lat, lon, unit = 'metric') => {
   try {
     // console.log("unit", unit)
     // metric(섭씨 c), imperial(화씨 f)
+    // const response = await axios.get(`${BASE_URL}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=${unit}&lang=kr`);
     const response = await axios.get(`${BASE_URL}?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=${unit}`);
     return response.data;
   } catch (error) {
