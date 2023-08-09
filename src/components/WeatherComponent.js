@@ -3,7 +3,7 @@ import { fetchWeather } from "../api/weatherAPI";
 import Dropdown from "./Dropdonw";
 import Label from "./Label";
 import { CANADA_CITIES } from "../data/cities";
-import { getGradientInfo, getWeatherByUnit } from "../data/utils";
+import { getGradientInfo, getWeatherByUnit, getLocalTimeByFormat } from "../data/utils";
 import ClockComponent from "./ClockComponent";
 
 function WeatherComponent() {
@@ -113,15 +113,19 @@ function WeatherComponent() {
                         <p className="text-2xl text-shadow-lg-dark">{getWeatherByUnit(weatherData.main.temp_max, unit)} / {getWeatherByUnit(weatherData.main.temp_min, unit)}</p>
                     </div>
                 </div>
-
-                <div className="text-white text-shadow-sm mt-4">
-                    <p className="text-xl flex"> Humidity : {weatherData.main.humidity}</p>
-                    <p className="text-xl flex">Wind speed: {weatherData.wind.speed}</p>
+                <div className="flex justfy-center">
+                    <div className="text-white text-shadow-sm mt-4 w-1/2">
+                        <p className="text-xl flex"> Humidity : {weatherData.main.humidity}</p>
+                        <p className="text-xl flex">Wind speed: {weatherData.wind.speed}</p>
+                    </div>
+                    <div className="text-white text-shadow-sm mt-4 w-1/2">
+                        <p className="text-xl flex"> Sunrise : {getLocalTimeByFormat(weatherData.sys.sunrise, weatherData.timezone, "hm")}</p>
+                        <p className="text-xl flex"> Sunset : {getLocalTimeByFormat(weatherData.sys.sunset, weatherData.timezone, "hm")}</p>
+                    </div>
                 </div>
             </div>
         );
     };
-
 
     return (
         <div className="min-h-screen flex justify-center bg-gray-200 pt-20 pb-20">

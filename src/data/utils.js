@@ -47,3 +47,20 @@ const getGroupById = (id) => {
     return id === 800 ? 800 : 80;
 }
 
+export const getLocalTimeByFormat = (time, timezone, format = "hms") => {
+    const localTime = (time + timezone) * 1000; // Convert to milliseconds
+    const date = new Date(localTime);
+
+    let hours = date.getUTCHours();
+    const minutes = date.getUTCMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+
+    if (format === "hm") {
+      return `${hours % 12}:${String(minutes).padStart(2, "0")} ${ampm}`;
+    }
+
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+
+    return `${hours}:${String(minutes).padStart(2, "0")} ${ampm}`;
+};
