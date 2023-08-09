@@ -1,4 +1,4 @@
-export const CANADA_CITIES = {
+export const MAIN_CITIES = {
     Vancouver: { lat: 49.28, lon: -123.12 },
     Kelowna: { lat: 49.89, lon: -119.50 },
     Toronto: { lat: 43.70, lon: -79.42 },
@@ -11,4 +11,5 @@ export const CANADA_CITIES = {
     London: { lat: 42.9849, lon: -81.2453 },
     Halifax: { lat: 44.6488, lon: -63.5752 },
     Victoria: { lat: 48.4284, lon: -123.3656 },
+    "Korea, Seoul": { lat: 37.5665, lon: 126.9780 },
 };

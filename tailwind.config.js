@@ -22,6 +22,14 @@ module.exports = {
         'mg-dark':'2px 2px 4px rgba(0, 0, 0, 0.7)',
         'sm-dark':'1px 1px 2px rgba(0, 0, 0, 0.7)',
       },
+      dropShadow: {
+        'sm-semi-dark': '1px 1px 2px rgba(0, 0, 0, 0.5)',
+        'md-semi-dark': '2px 2px 4px rgba(0, 0, 0, 0.5)',
+        'lg-semi-dark': '4px 4px 8px rgba(0, 0, 0, 0.5)',        
+        'sm-dark': '1px 1px 1px rgba(0, 0, 0, 0.8)',
+        'md-dark': '2px 2px 4px rgba(0, 0, 0, 0.8)',
+        'lg-dark': '4px 4px 8px rgba(0, 0, 0, 0.8)',    
+      }
     },
   },
   plugins: [

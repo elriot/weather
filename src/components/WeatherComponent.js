@@ -2,32 +2,34 @@ import React, { useState, useEffect } from "react";
 import { fetchWeather } from "../api/weatherAPI";
 import Dropdown from "./Dropdonw";
 import Label from "./Label";
-import { CANADA_CITIES } from "../data/cities";
+import { MAIN_CITIES } from "../data/cities";
 import { getGradientInfo, getWeatherByUnit, getLocalTimeByFormat } from "../data/utils";
 import ClockComponent from "./ClockComponent";
+import {WiSunrise, WiSunset, WiHumidity, WiStrongWind, WiRaindrop, WiThermometer} from "react-icons/wi";
+
+const IMPERIAL = 'imperial';
+const METRIC  = 'metric';
 
 function WeatherComponent() {
     const [weatherData, setWeatherData] = useState(null);
     const [city, setCity] = useState(""); // default city  
-    const [unit, setUnit] = useState("imperial");
+    const [unit, setUnit] = useState(IMPERIAL);
     const [isCityChanging, setIsCityChanging] = useState(false);
 
     const options = [
-        { value: 'imperial', label: 'imperial' },
-        { value: 'metric', label: 'metric' }
+        { value: IMPERIAL, label: 'imperial' },
+        { value: METRIC, label: 'metric' }
     ];
-    const cities = [];
-    for (const city in CANADA_CITIES) {
-        cities.push({ value: city, label: city });
-    }
+    const cities = Object.keys(MAIN_CITIES).map(city => ({ value: city, label: city }));
+
 
 
     useEffect(() => {
         const fetchData = async () => {
-            const location = CANADA_CITIES[city];
+            const location = MAIN_CITIES[city];
             if (!location) {
                 renderWeather();
-                console.log(`No location data for city: ${city}`);
+                // console.error(`No location data for city: ${city}`);
                 return;
             }
             try {
@@ -35,6 +37,7 @@ function WeatherComponent() {
                 setWeatherData(data);
                 setIsCityChanging(false);
             } catch (error) {
+                console.error("failed to fatch weather data", error);
             }
         };
         fetchData();
@@ -55,15 +58,15 @@ function WeatherComponent() {
         // if I have 1 weather data, it aligns center       
 
         return (
-            <div className={`flex justify-center`}>
+            <div className="flex justify-center mt-4 mb-4 -translate-x-2">
                 {conditions.map((condition, index) => (
                     <div key={index} className="flex items-center mr-4 last:mr-0">
-                        <p className="text-2xl font-semibold text-shadow-lg mr-2 pb-1">{condition.main}</p>
                         <img
                             src={`https://openweathermap.org/img/wn/${condition.icon}.png`}
                             alt={condition.description}
                             className=""
                         />
+                        <p className="text-2xl font-semibold text-shadow-lg mr-2 pb-1">{condition.main}</p>
                     </div>
                 ))}
             </div>
@@ -75,6 +78,7 @@ function WeatherComponent() {
             return null;
         }
         const getTempByUnit = getWeatherByUnit(weatherData.main.temp, unit);
+        const feelsLikeByUnit = getWeatherByUnit(weatherData.main.feels_like, unit);
         // console.log(weatherData);
         const gradientInfo = getGradientInfo({
             id: weatherData.weather[0].id,
@@ -103,25 +107,49 @@ function WeatherComponent() {
                         );
                     })}
                 </div>
-                <div className="flex">
+                <div className="flex mt-3">
                     <div className="w-1/2 text-white">
-                        <h2 className="text-xl text-shadow-sm">Temperature</h2>
-                        <p className="text-2xl text-shadow-lg-dark">{getTempByUnit}</p>
+                        <h2 className="text-lg text-shadow-sm flex"><WiThermometer className="self-center mt-1"/>TEMPERATURE</h2>
+                        <p className="text-2xl text-shadow-lg-dark ml-4">{getTempByUnit}</p>
+                        <div className="flex text-sm text-shadow-sm ml-4">
+                            FEELS LIKE : {feelsLikeByUnit}
+                        </div>
                     </div>
                     <div className="w-1/2 text-white">
-                        <h2 className="text-xl text-shadow-sm">High / Low</h2>
+                        <h2 className="text-lg text-shadow-sm">HIGH / LOW</h2>
                         <p className="text-2xl text-shadow-lg-dark">{getWeatherByUnit(weatherData.main.temp_max, unit)} / {getWeatherByUnit(weatherData.main.temp_min, unit)}</p>
                     </div>
                 </div>
-                <div className="flex justfy-center">
+                <div className="flex justify-center mt-3">
                     <div className="text-white text-shadow-sm mt-4 w-1/2">
-                        <p className="text-xl flex"> Humidity : {weatherData.main.humidity}</p>
-                        <p className="text-xl flex">Wind speed: {weatherData.wind.speed}</p>
+                        <p className="text-lg flex">
+                            <WiHumidity className="self-center mr-1 mt-1 drop-shadow-md-semi-dark" />
+                            HUMIDITY : {weatherData.main.humidity} %
+                        </p>
+                        <p className="text-lg flex">
+                            <WiStrongWind className="self-center mr-1 mt-1 drop-shadow-md-semi-dark" />
+                            WIND SPEED : {weatherData.wind.speed} Km/h
+                        </p>
+
                     </div>
                     <div className="text-white text-shadow-sm mt-4 w-1/2">
-                        <p className="text-xl flex"> Sunrise : {getLocalTimeByFormat(weatherData.sys.sunrise, weatherData.timezone, "hm")}</p>
-                        <p className="text-xl flex"> Sunset : {getLocalTimeByFormat(weatherData.sys.sunset, weatherData.timezone, "hm")}</p>
+                        <p className="text-lg flex">
+                            <WiSunrise className="self-center mr-1 mt-1 drop-shadow-md-semi-dark" />
+                            SUNRISE : {getLocalTimeByFormat(weatherData.sys.sunrise, weatherData.timezone, "hm")}
+                        </p>
+                        <p className="text-lg flex">
+                            <WiSunset className="self-center mr-1 mt-1 drop-shadow-md-semi-dark"/>
+                            SUNSET: {getLocalTimeByFormat(weatherData.sys.sunset, weatherData.timezone, "hm")}
+                        </p>
                     </div>
+                </div>
+                <div className="text-white text-shadow-sm">
+                    {weatherData.rain && weatherData.rain["1h"] &&
+                        <p className="text-lg flex">
+                            <WiRaindrop className="self-center mr-1 mt-1 drop-shadow-md-semi-dark" />
+                            RAIN FALL : {weatherData.rain["1h"]} mm
+                        </p>
+                    }
                 </div>
             </div>
         );
@@ -129,7 +157,7 @@ function WeatherComponent() {
 
     return (
         <div className="min-h-screen flex justify-center bg-gray-200 pt-20 pb-20">
-            <div className="p-8 bg-white shadow-lg rounded-lg flex flex-col space-y-4 w-1/2 min-w-500">
+            <div className="p-8 bg-white shadow-lg rounded-lg flex flex-col space-y-4 w-1/2 min-w-600">
                 <Label size="large" className="text-shadow-lg-light">Weather Information</Label>
                 <div className="flex space-x-4">
                     <Dropdown options={cities} onChange={handleCityChange} className="w-1/2" msg="select city" />

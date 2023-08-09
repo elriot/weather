@@ -6,7 +6,7 @@ export const WEATHER_CONDITIONS = {
     5: { name: 'Rain', bg: 'bg-gray-300', gradient: 'from-gray-500', dir: 'bg-gradient-to-t'},
     6: { name: 'Snow', bg: 'bg-gray-300', gradient: 'from-gray-500', dir: 'bg-gradient-to-t'},
     7: { name: 'Atmosphere', bg: 'bg-gray-300', gradient: 'from-gray-500', dir: 'bg-gradient-to-t'},
-    80: { name: 'Clouds', bg: 'bg-indigo-200', gradient: 'from-gray-200', dir: 'bg-gradient-to-t'},
+    80: { name: 'Clouds', bg: 'bg-indigo-300', gradient: 'from-gray-300', dir: 'bg-gradient-to-b'},
     800: { name: 'Clear', bg: 'bg-blue-200', gradient: 'from-indigo-500', dir: 'bg-gradient-to-t'},
     900: { name:'Night', bg:'bg-gray-900', gradient:'from-gray-700', dir: 'bg-gradient-to-t'},
 };
