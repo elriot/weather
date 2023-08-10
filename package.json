@@ -47,5 +47,5 @@
   "devDependencies": {
     "tailwindcss": "^3.3.3"
   },
-  "homepage": "https://elriot.github.io/weather"
+  "homepage": "http://elriot.github.io/weather"
 }
