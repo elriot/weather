@@ -3,11 +3,18 @@
 A simple and intuitive weather application designed to provide current weather data. This app is built using React and features dynamic backgrounds that change based on the current weather and time.
 
 
+
+
 ## Features
 
 - Fetches real-time weather data based on the selected location.
+
 - Provides temperature, humidity, wind speed, and weather conditions.
+
 - Displays dynamic backgrounds depending on the current local weather and local time.
+
+
+
 
 
 ## Libraries & APIs
