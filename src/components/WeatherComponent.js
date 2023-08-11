@@ -54,7 +54,7 @@ function WeatherComponent() {
                 <Label size="large" className="text-shadow-lg-light">Weather Information</Label>
                 <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
                     <Dropdown options={cities} initialValue={city} onChange={handleCityChange} className="w-full md:w-1/2" msg="Select City" />
-                    <Dropdown options={options} initialValue={unit} onChange={handleUnitChange} className="w-full md:w-1/2" />
+                    <Dropdown options={options} initialValue={unit} onChange={handleUnitChange} className="w-full md:w-1/2" msg="Select Unit"/>
                 </div>
                 {renderWeather(weatherData, unit, city, isCityChanging)}
             </div>
