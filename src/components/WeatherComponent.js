@@ -9,7 +9,7 @@ const IMPERIAL = 'Imperial';
 const METRIC  = 'Metric';
 
 function WeatherComponent() {
-    const [city, setCity] = useState(""); // default city  
+    const [city, setCity] = useState("Vancouver"); // default city  
     const [unit, setUnit] = useState(IMPERIAL);
     const [isCityChanging, setIsCityChanging] = useState(false);
     const [weatherData, setWeatherData] = useState(null);
@@ -53,8 +53,8 @@ function WeatherComponent() {
             <div className="p-8 bg-white shadow-lg rounded-lg flex flex-col space-y-4 md:w-1/2 w-full md:min-w-600">
                 <Label size="large" className="text-shadow-lg-light">Weather Information</Label>
                 <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-                    <Dropdown options={cities} onChange={handleCityChange} className="w-full md:w-1/2" msg="Select City" />
-                    <Dropdown options={options} onChange={handleUnitChange} className="w-full md:w-1/2" />
+                    <Dropdown options={cities} initialValue={city} onChange={handleCityChange} className="w-full md:w-1/2" msg="Select City" />
+                    <Dropdown options={options} initialValue={unit} onChange={handleUnitChange} className="w-full md:w-1/2" />
                 </div>
                 {renderWeather(weatherData, unit, city, isCityChanging)}
             </div>
